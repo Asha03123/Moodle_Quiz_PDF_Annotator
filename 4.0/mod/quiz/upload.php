@@ -11,14 +11,10 @@
 
 require_once('../../config.php');
 require_once('locallib.php');
-require __DIR__ . '/test.php';
+require __DIR__ . '/parsefunctions.php';
 require __DIR__ . '/parser.php';
 require __DIR__ . '/alphapdf.php';
-include 'fpdi-fpdf/vendor/autoload.php';
-use setasign\Fpdi\Fpdi;
 
-
-define("RATIO", 0.238);
 
 //Getting all the data from mypdfannotate.js
 $value = $_POST['id'];
@@ -46,14 +42,16 @@ $fi = fopen("./" .$fn, 'w'); // open the file path
 fwrite($fi, $value); //save data
 fclose($fi);
 
+//Get the contents of the file and convert into php arrays
 $values = file_get_contents("values.txt");
-
 $json = json_decode($values,true);
 
+//Get the page orientation
 $orientation=$json["page_setup"]['orientation'];
 $orientation=($orientation=="portrait")? 'p' : 'l';
 
 
+//To convert PDF versions to 1.4 if the version is above it since FPDI parser will only work for PDF versions upto 1.4
 $file = 'dummy.pdf'; 
 $filepdf = fopen($file,"r");
 if ($filepdf) 
@@ -72,6 +70,9 @@ if ($filepdf)
     }
 fclose($filepdf);
 }
+
+
+//Using FPDF and FPDI to annotate
 $pdf = new AlphaPDF($orientation); 
 if(file_exists("./".$file))
     $pagecount = $pdf->setSourceFile($file); 
@@ -131,6 +132,7 @@ if($doesExists === true)
 // finally save the file (creating a new file)
 $fs->create_file_from_pathname($fileinfo, $temppath);
 
+// Deleting temporary files
 shell_exec("rm -rf values.txt");
 shell_exec("rm -rf dummy.pdf");
 shell_exec("rm -rf outputmoodle.pdf");

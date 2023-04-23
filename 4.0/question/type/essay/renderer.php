@@ -167,13 +167,15 @@ class qtype_essay_renderer extends qtype_renderer {
         foreach ($files as $file) {
             $temp = $qa->get_response_file_url($file);
             $url = (explode("?", $temp))[0];
-            $name = end((explode("/", $url)));
+            $name = (explode("/", $url));
+            $name = end($name);
             $name = urldecode($name);
             // check if format is not PDF
             // then change the filename as originalFileName_topdf.pdf
-            if(end(explode('.', $name)) != "pdf")
+            $temp_name = explode('.', $name);
+            if(end($temp_name) != "pdf")
             {
-                $name = (explode('.', $name))[0] . "_topdf.pdf";
+                $name = ($temp_name)[0] . "_topdf.pdf";
             }
             $names[] = $name;
         }

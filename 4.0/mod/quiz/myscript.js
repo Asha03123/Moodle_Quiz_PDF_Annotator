@@ -44,6 +44,7 @@ var pdf = new PDFAnnotate("pdf-container", fileurl, {
       return false;    // changes made
   }
   
+
   function enableRectangle(event) {
       event.preventDefault();
       changeActiveTool(event);

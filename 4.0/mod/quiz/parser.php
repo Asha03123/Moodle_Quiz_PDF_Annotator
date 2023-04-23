@@ -6,6 +6,7 @@ function normalize($val)
     return RATIO * $val;
 }
 
+//Parser for free hand drawings 
 function parser_path($arr) 
 {
     $list = array();
@@ -17,7 +18,6 @@ function parser_path($arr)
         if($i==0 || $i== $len-2)
             continue;
 
-        
         array_push($temp,normalize($arr["path"][$i][1]));
         array_push($temp,normalize($arr["path"][$i][2]));
         array_push($list,$temp);
@@ -26,10 +26,12 @@ function parser_path($arr)
         array_push($temp,normalize($arr["path"][$i][4]));
         array_push($list,$temp);
     }
-    array_push($list,$arr["stroke"]);
+   array_push($list,$arr["stroke"]);
    return $list;
 }
 
+
+//Parser for text
 function parser_text($arr)
 {
     $list=array();
@@ -39,6 +41,8 @@ function parser_text($arr)
     return $list;
 }
 
+
+//Parser for rectangle
 function parser_rectangle($arr)
 {
     $list=array();
@@ -50,6 +54,8 @@ function parser_rectangle($arr)
 
 }
 
+
+//Parser for color
 function process_color($str) {
     if ($str == "null")
         $val = [null];
@@ -67,7 +73,6 @@ function process_color($str) {
         $val =array();
         list($r, $g, $b) = sscanf($str, "#%02x%02x%02x");
         $val=[$r, $g, $b];
-   
         
         
     if (preg_match('/rgb/', $str)) 

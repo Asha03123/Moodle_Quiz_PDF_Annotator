@@ -67,7 +67,8 @@ foreach ($files as $file) {
 // if exists, then render this file only (i.e. update the $fileurl)
 $attemptid = $attemptobj->get_attemptid();
 $contextid = $options->context->id;
-$filename = end(explode("/", $fileurl));
+$filename = explode("/", $fileurl);
+$filename = end($filename);
 $filename = urldecode($filename);
 $component = 'question';
 $filearea = 'response_attachments';
@@ -76,7 +77,8 @@ $itemid = $attemptobj->get_attemptid();
 
 $supported=1;
 // checking if file is not pdf
-$format = end(explode(".", $filename));
+$format = explode(".", $filename);
+$format = end($format);
 $ispdf = true;
 if($format !== 'pdf')
 {

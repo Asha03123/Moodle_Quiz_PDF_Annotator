@@ -12,7 +12,7 @@ var PDFAnnotate = function(container_id, url, options = {}) {
 	this.active_tool = 1; // 1 - Free hand, 2 - Text, 3 - Arrow, 4 - Rectangle
 	this.fabricObjects = [];
 	this.fabricObjectsData = [];
-	this.color = '#212121';
+	this.color = '#000000';
 	this.borderColor = '#000000';
 	this.borderSize = 1;
 	this.font_size = 16;
@@ -174,7 +174,6 @@ PDFAnnotate.prototype.enableRectangle = function () {
 	return false;
 }
 
-
 PDFAnnotate.prototype.deleteSelectedObject = function () {
 	var inst = this;
 	var activeObject = inst.fabricObjects[inst.active_canvas].getActiveObject();
@@ -185,6 +184,7 @@ PDFAnnotate.prototype.deleteSelectedObject = function () {
 	return false;
 }
 
+
   PDFAnnotate.prototype.savePdf = function (fileName) {
     pdf.serializePdf(function (string) {
       var value = JSON.stringify(JSON.parse(string), null, 4);
@@ -193,17 +193,15 @@ PDFAnnotate.prototype.deleteSelectedObject = function () {
 	  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	  xmlhttp.onreadystatechange = function() {
 
-		if (this.readyState==4 && this.status ==200 ) {
+		if (this.status ==200 && this.readyState ==4  ) {
 			alert("file has been saved");
 		}
-		// }
-		else if (this.status !=200){
-			alert("not able to save file");
+		else if (this.status !=200 ) {
+			alert("Not able to save the file");
 		}
 
 	  };
 	  xmlhttp.send("id=" + value + "&contextid=" + contextid + "&attemptid="+attemptid + "&filename=" + filename + "&furl=" + furl);
-
     });
 };
 
@@ -220,7 +218,7 @@ PDFAnnotate.prototype.serializePdf = function (callback) {
 		fabricObjectCopy.setBackgroundColor('');
 		if(fabricObjectCopy._objects.length !== 0)
 		{
-			pageAnnotations[index].push(fabricObjectCopy);
+		pageAnnotations[index].push(fabricObjectCopy);
 		}
 		if (index+1 === inst.fabricObjects.length) {
 		  var data = {
@@ -241,6 +239,7 @@ PDFAnnotate.prototype.serializePdf = function (callback) {
 	  },
 	  pages: pageAnnotations,
 	};
+	
   };
 
 PDFAnnotate.prototype.setColor = function (color) {

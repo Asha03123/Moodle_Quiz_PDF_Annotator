@@ -45,7 +45,7 @@ Follow this [link](https://docs.bitnami.com/google/apps/resourcespace/configurat
 __Note you might need to change the variable MOODLE in Makefile according to your folder name if you followed default settings while installing moodle then this is not needed but if you changed the name from moodle to something else then you need to update here the same.__   
 
 ### Steps to remove Quiz Annotator from  Moodle
-1. Go to the Moodle_Quiz_PDF_Annotator folder ,open terminal and run 
+1. Go to the moodle_quiz_qnnotator folder ,open terminal and run 
     * `sudo make restore`
     
 ### Support for other versions
