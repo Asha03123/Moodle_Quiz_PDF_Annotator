@@ -133,7 +133,8 @@ foreach ($files as $file) {
     $fileno = $fileno + 1;
     $out = urldecode($qa->get_response_file_url($file));
     $url = (explode("?", $out))[0];       // remove ?forcedownload=1 from the end of the url
-    $filename = end(explode('/', $url));  // split based on "/" and take last element; this would be filename
+    $filename = explode('/', $url);  // split based on "/" and take last element; this would be filename
+    $filename = end($filename);
     $dropdown .= '<option value="' . $fileno . '">' . $filename . '</option>';
 }
 $dropdown .= '</select>';
