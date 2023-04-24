@@ -85,9 +85,9 @@ for($i=1 ; $i <= $pagecount; $i++)
     $size = $pdf->getTemplateSize($tpl); 
     $pdf->addPage(); 
     $pdf->useTemplate($tpl, 1, 1, $size['width'], $size['height'], FALSE); 
-    if(count($json["pages"][$i-1]) ==0)
+    if(count((array)$json["pages"][$i-1]) ==0)
         continue;
-    $objnum=count($json["pages"][$i-1][0]["objects"]);
+    $objnum=count((array)$json["pages"][$i-1][0]["objects"]);
     for($j=0;$j<$objnum;$j++)
     {
         $arr = $json["pages"][$i-1][0]["objects"][$j];
