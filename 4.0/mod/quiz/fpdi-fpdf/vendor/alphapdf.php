@@ -1,7 +1,12 @@
 <?php
-include 'fpdi-fpdf/fpdf/fpdf.php';
-include 'fpdi-fpdf/fpdi/src/autoload.php';
-// use setasign\Fpdi\Fpdi;
+/**
+ * Simply test the behaviour when importing pages which uses a graphic state with opacity values
+ * into a page, that also uses such graphic state (handling of $groupXObject parameter of the importPage()).
+ */
+
+use setasign\Fpdi\Fpdi;
+
+require_once 'autoload.php';
 
 class AlphaPDF extends Fpdi
 {
@@ -68,4 +73,5 @@ class AlphaPDF extends Fpdi
         parent::_putresources();
     }
 }
+
 ?>
