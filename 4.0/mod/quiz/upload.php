@@ -26,6 +26,8 @@ $filearea = 'response_attachments';
 $filepath = '/';
 $itemid = $attemptid;
 
+echo $contextid;
+
 $fs = get_file_storage();
 // Prepare file record object
 $fileinfo = array(
@@ -36,24 +38,13 @@ $fileinfo = array(
     'filepath' => $filepath,
     'filename' => $filename);
 
-// //Created a new file with the annotation data
-// $fn = "values.txt"; // name the file
-// $fi = fopen("./" .$fn, 'w'); // open the file path
-// fwrite($fi, $value); //save data
-// fclose($fi);
-
-//Get the contents of the file and convert into php arrays
-// $values = file_get_contents("values.txt");
-
 $values = $value;
 $json = json_decode($values,true);
-// echo $json;
 
 // //Get the page orientation
 $orientation=$json["page_setup"]['orientation'];
 $orientation=($orientation=="portrait")? 'p' : 'l';
 echo $orientation;
-
 
 //To convert PDF versions to 1.4 if the version is above it since FPDI parser will only work for PDF versions upto 1.4
 $file = 'dummy.pdf'; 
@@ -74,7 +65,6 @@ if ($filepdf)
     }
 fclose($filepdf);
 }
-
 
 //Using FPDF and FPDI to annotate
 $pdf = new AlphaPDF($orientation); 
@@ -136,9 +126,8 @@ if($doesExists === true)
 // finally save the file (creating a new file)
 $fs->create_file_from_pathname($fileinfo, $temppath);
 
-// // Deleting temporary files
-// // shell_exec("rm -rf values.txt");
-// // shell_exec("rm -rf dummy.pdf");
-// // shell_exec("rm -rf outputmoodle.pdf");
+// Deleting temporary files
+shell_exec("rm -rf dummy.pdf");
+shell_exec("rm -rf outputmoodle.pdf");
 ?>
 

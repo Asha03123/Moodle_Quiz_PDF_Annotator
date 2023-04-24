@@ -200,8 +200,6 @@ PDFAnnotate.prototype.deleteSelectedObject = function () {
 			alert("Not able to save the file");
 		}
 
-		console.log(this.responseText);
-
 	  };
 	  xmlhttp.send("id=" + value + "&contextid=" + contextid + "&attemptid="+attemptid + "&filename=" + filename + "&furl=" + furl);
     });
