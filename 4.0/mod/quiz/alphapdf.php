@@ -1,7 +1,7 @@
 <?php
 include 'fpdi-fpdf/fpdf/fpdf.php';
 include 'fpdi-fpdf/fpdi/src/autoload.php';
-// use setasign\Fpdi\Fpdi;
+use setasign\Fpdi\Fpdi;
 
 class AlphaPDF extends Fpdi
 {
