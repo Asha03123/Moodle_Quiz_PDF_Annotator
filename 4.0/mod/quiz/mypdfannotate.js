@@ -243,7 +243,7 @@ PDFAnnotate.prototype.serializePdf = function (callback) {
 				if(fabricObjectCopy._objects[j].get('type')== 'path')
 				{
 					var pathObj = fabricObjectCopy._objects[j];
-					matrix=pathObj.calcOwnMatrix();
+					matrix=pathObj.calcTransformMatrix();
 					var pointsList = pathObj.path;
 					var length = Object.keys(pointsList).length;
 					var offsetX=pathObj.pathOffset.x

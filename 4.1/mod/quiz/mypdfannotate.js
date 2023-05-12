@@ -138,9 +138,7 @@
 			  activeObject.set({
 				lockScalingX: true,
 				lockScalingY: true,
-				lockRotation: true,
-				lockMovementX: true,
-				lockMovementY: true});
+				lockRotation: true});
 			}
 		}
 	  }
@@ -240,7 +238,38 @@ PDFAnnotate.prototype.serializePdf = function (callback) {
 		fabricObjectCopy.setBackgroundColor('');
 		if(fabricObjectCopy._objects.length !== 0)
 		{
-		pageAnnotations[index].push(fabricObjectCopy);
+			for(var j=0; j< fabricObjectCopy._objects.length ; j++)
+          	{
+				if(fabricObjectCopy._objects[j].get('type')== 'path')
+				{
+					var pathObj = fabricObjectCopy._objects[j];
+					matrix=pathObj.calcTransformMatrix();
+					var pointsList = pathObj.path;
+					var length = Object.keys(pointsList).length;
+					var offsetX=pathObj.pathOffset.x
+					var offsetY=pathObj.pathOffset.y;
+					for(var i=0; i< length;i++)
+					{
+						var point1= new fabric.Point(pointsList[i][1],pointsList[i][2]);
+						var newPoints1= fabric.util.transformPoint(point1, matrix);
+						var x1 = newPoints1.x - offsetX;
+						var y1 = newPoints1.y - offsetY;
+						pointsList[i][1]=x1;
+						pointsList[i][2]=y1;
+						if(i!=0 && i!=length -1)
+						{
+							var point2= new fabric.Point(pointsList[i][3],pointsList[i][4]);
+							var newPoints2= fabric.util.transformPoint(point2, matrix);
+							var x2 = newPoints2.x - offsetX;
+							var y2 = newPoints2.y - offsetY;
+							pointsList[i][3]=x2;
+							pointsList[i][4]=y2;
+						}
+					}
+					fabricObjectCopy._objects[j].path=pointsList;
+				}
+          	}
+			pageAnnotations[index].push(fabricObjectCopy);
 		}
 		if (index+1 === inst.fabricObjects.length) {
 		  var data = {
